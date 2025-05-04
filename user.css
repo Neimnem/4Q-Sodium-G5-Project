@@ -10,7 +10,7 @@ body {
     text-shadow: 2px 1px 1px rgba(0, 0, 0, 0.7);
     font-family: "Times New Roman", serif;
     text-align: center;
-    background-image: url(space2.png);
+    background-image: url('Images/space2.png');
     background-size: cover;
     background-position: center;
     overflow-x: hidden;

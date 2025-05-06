@@ -84,7 +84,7 @@ function updateScore() {
 
     if (score > highScoreEasy) {
         highScoreEasy = score;
-        highScoreDisplay.innerHTML = "High Score: " + highScoreEasy;
+        highScoreDisplay.innerHTML = "High Score (Easy): " + highScoreEasy;
         localStorage.setItem("highScoreEasy", highScoreEasy);
     }
 }

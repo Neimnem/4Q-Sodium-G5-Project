@@ -4,7 +4,7 @@ let score = 0;
 let clickable = false;   
 let userSequence = [];  
 let highScore = 0;
-let flashSpeed = 200;
+let flashSpeed = 300;
 if (localStorage.getItem("highScore")) {
     highScore = parseInt(localStorage.getItem("highScore"));
 } else {
@@ -27,7 +27,7 @@ function flash(color) {
     panel.style.filter = 'brightness(1.5)';               
     setTimeout(function () {
         panel.style.filter = 'brightness(1)';             
-    }, 200); 
+    }, 100); 
 }
 
 // Turn ni Simon: add new color + i-play ang buong sequence

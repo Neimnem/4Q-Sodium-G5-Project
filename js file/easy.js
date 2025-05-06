@@ -58,7 +58,7 @@ function handleUserClick(e) {
     userSequence.push(color);
 
     for (let i = 0; i < userSequence.length; i++) {
-        if (userSequence[i] !== simonSequence[i]) {
+        if (userSequence[i] != simonSequence[i]) {
             endGame();
             return;
         }

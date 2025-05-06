@@ -123,3 +123,4 @@ startButton.addEventListener('click', () => {
     resetGame();
     playSimon();
 });
+

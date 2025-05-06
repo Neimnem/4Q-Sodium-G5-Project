@@ -3,11 +3,11 @@ let simonSequence = [];
 let score = 0;
 let clickable = false;
 let userSequence = [];
-let highScore;
-if (localStorage.getItem("highScore")) {
-    highScore = parseInt(localStorage.getItem("highScore"));
+let highScoreEasy;
+if (localStorage.getItem("highScoreEasy")) {
+    highScoreEasy = parseInt(localStorage.getItem("highScoreEasy"));
 } else {
-    highScore = 0;
+    highScoreEasy = 0;
 }
 
 const turnIndicator = document.getElementById('turn-indicator');
@@ -17,10 +17,9 @@ const scoreDisplay = document.getElementById('score');
 const highScoreDisplay = document.getElementById('high-score');
 const gameOverScreen = document.getElementById('game-over');
 const gameOverText = document.getElementById('game-over-text');
-const resetHighScoreBtn = document.getElementById('reset-highscore');
 
-// Display loaded high score
-highScoreDisplay.innerHTML = "High Score: " + highScore;
+// Display Easy mode high score
+highScoreDisplay.innerHTML = "High Score: " + highScoreEasy;
 
 // Flash a color panel
 function flash(color) {
@@ -75,7 +74,6 @@ function handleUserClick(e) {
     }
 }
 
-// Update score and high score
 function updateScore() {
     scoreDisplay.innerHTML = "Score: " + score;
     scoreDisplay.style.transition = "color 0.3s";
@@ -84,17 +82,17 @@ function updateScore() {
         scoreDisplay.style.color = "white";
     }, 300);
 
-    if (score > highScore) {
-        highScore = score;
-        highScoreDisplay.innerHTML = "High Score: " + highScore;
-        localStorage.setItem("highScore", highScore); 
+    if (score > highScoreEasy) {
+        highScoreEasy = score;
+        highScoreDisplay.innerHTML = "High Score (Easy): " + highScoreEasy;
+        localStorage.setItem("highScoreEasy", highScoreEasy);
     }
 }
 
 // End game
 function endGame() {
     clickable = false;
-    gameOverText.innerHTML = `Game Over<br>Final Score: ${score}<br>High Score: ${highScore}`;
+    gameOverText.innerHTML = `Game Over<br>Final Score: ${score}<br>High Score: ${highScoreEasy}`;
     gameOverScreen.style.display = 'flex';
     startButton.style.display = 'block';
 }
@@ -109,18 +107,18 @@ function resetGame() {
 }
 
 // Play again button
-document.getElementById('play-again').addEventListener('click', function () {
+document.getElementById('play-again').addEventListener('click', () => {
     resetGame();
     gameOverScreen.style.display = 'none';
 });
 
 // Panel click listeners
-panels.forEach(function (panel) {
+panels.forEach(panel => {
     panel.addEventListener('click', handleUserClick);
 });
 
 // Start game
-startButton.addEventListener('click', function () {
+startButton.addEventListener('click', () => {
     startButton.style.display = 'none';
     resetGame();
     playSimon();

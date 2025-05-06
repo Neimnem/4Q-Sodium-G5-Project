@@ -1,25 +1,26 @@
-const colors = ['teal', 'lightblue', 'pink', 'lightyellow']; 
-let simonSequence = [];  
-let score = 0;           
-let clickable = false;   
-let userSequence = [];  
-let highScore = 0;
-let flashSpeed = 300;
-if (localStorage.getItem("highScore")) {
-    highScore = parseInt(localStorage.getItem("highScore"));
+const colors = ['teal', 'lightblue', 'pink', 'lightyellow'];
+let simonSequence = [];
+let score = 0;
+let clickable = false;
+let userSequence = [];
+let flashSpeed = 600;
+let highScoreHard;
+if (localStorage.getItem("highScoreHard")) {
+    highScoreHard = parseInt(localStorage.getItem("highScoreHard"));
 } else {
-    highScore = 0;
+    highScoreHard = 0;
 }
 
 const turnIndicator = document.getElementById('turn-indicator');
-const panels = document.querySelectorAll('.panel');             
-const startButton = document.getElementById('start');           
-const scoreDisplay = document.getElementById('score');           
-const highScoreDisplay = document.getElementById('high-score');   
-const gameOverScreen = document.getElementById('game-over');     
-const gameOverText = document.getElementById('game-over-text');   
+const panels = document.querySelectorAll('.panel');
+const startButton = document.getElementById('start');
+const scoreDisplay = document.getElementById('score');
+const highScoreDisplay = document.getElementById('high-score');
+const gameOverScreen = document.getElementById('game-over');
+const gameOverText = document.getElementById('game-over-text');
 
-highScoreDisplay.innerHTML = "High Score: " + highScore;
+// Display Hard mode high score
+highScoreDisplay.innerHTML = "High Score: " + highScoreHard;
 
 // Function para i flash ang  panel
 function flash(color) {
@@ -27,7 +28,7 @@ function flash(color) {
     panel.style.filter = 'brightness(1.5)';               
     setTimeout(function () {
         panel.style.filter = 'brightness(1)';             
-    }, 100); 
+    }, 200); 
 }
 
 // Turn ni Simon: add new color + i-play ang buong sequence
@@ -51,6 +52,8 @@ function playSimon() {
         clickable = true;
         turnIndicator.innerText = "Your Turn!";
     }, simonSequence.length * flashSpeed);
+
+    if (flashSpeed > 100) flashSpeed -= 30;
 }
 
 // Function pto handle the clicks of user in panel
@@ -87,45 +90,45 @@ function updateScore() {
         scoreDisplay.style.color = "white";           
     }, 300);
 
-    if (score > highScore) {
-        highScore = score;
-        highScoreDisplay.innerHTML = "High Score: " + highScore;
-        localStorage.setItem("highScore", highScore); 
+    if (score > highScoreHard) {
+        highScoreHard = score;
+        highScoreDisplay.innerHTML = "High Score (Hard): " + highScoreHard;
+        localStorage.setItem("highScoreHard", highScoreHard);
     }
 }
 
 // Function para matapos ang game kapag nagkamali si user
 function endGame() {
-    clickable = false;  
-    gameOverText.innerHTML = `Game Over<br>Final Score: ${score}<br>High Score: ${highScore}`;
-    gameOverScreen.style.display = 'flex';  
-    startButton.style.display = 'block';    
+    clickable = false;
+    gameOverText.innerHTML = `Game Over<br>Final Score: ${score}<br>High Score: ${highScoreHard}`;
+    gameOverScreen.style.display = 'flex';
+    startButton.style.display = 'block';
 }
-
-// Play Again button functions
-document.getElementById('play-again').addEventListener('click', function () {
-    resetGame();                      
-    gameOverScreen.style.display = 'none'; 
-});
 
 // Resets all the game values
 function resetGame() {
     simonSequence = [];
     userSequence = [];
     score = 0;
+    flashSpeed = 600;
     clickable = false;
-    flashSpeed = 600; 
     updateScore();
 }
 
+// Play Again button functions
+document.getElementById('play-again').addEventListener('click', () => {
+    resetGame();
+    gameOverScreen.style.display = 'none';
+});
+
 // Add event listener for eachh panel
-panels.forEach(function (panel) {
-    panel.addEventListener('click', handleUserClick); 
+panels.forEach(panel => {
+    panel.addEventListener('click', handleUserClick);
 });
 
 // Start button function
-startButton.addEventListener('click', function () {
-    startButton.style.display = 'none'; 
-    resetGame();                        
-    playSimon();                       
+startButton.addEventListener('click', () => {
+    startButton.style.display = 'none';
+    resetGame();
+    playSimon();
 });
